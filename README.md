@@ -4,6 +4,6 @@
 里面就是一个qt工程。
 截图：
 
- ![image](https://github.com/absolve/tetris/blob/master/2020-02-16%20223145.png)
- ![image](https://github.com/absolve/tetris/blob/master/2020-02-16%20223319.png)
+![image](https://github.com/absolve/tetris/blob/master/2020-02-16%20223145.png)
+![image](https://github.com/absolve/tetris/blob/master/2020-02-16%20223319.png)
 
