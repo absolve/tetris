@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>refresh.ico</file>
+        <file>stop.ico</file>
+        <file>play.ico</file>
+        <file>Tetris.ico</file>
+        <file>help.ico</file>
+    </qresource>
+</RCC>
