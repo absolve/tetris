@@ -2,6 +2,12 @@
 #define TETRISBOX_H
 #include <QColor>
 
+/**
+ * 这个类用来表示每个方块的信息
+ * 每个方块都是以坐标原点为中心，每个长度为1的方块
+ * 方块的旋转都是更改它的坐标实现
+ * 
+ * */
 class tetrisbox
 {
 public:

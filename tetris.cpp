@@ -11,13 +11,11 @@
 
 Tetris::Tetris(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Tetris)
-{
+    ui(new Ui::Tetris){
     ui->setupUi(this);
     this->setFixedSize(480,320);
     this->setWindowTitle(QString("Tetris v1.0 by king"));
     this->setWindowIcon(QIcon(":/Tetris.ico"));
-
 
     boxSize=20;
     newX=5*boxSize;
@@ -29,7 +27,6 @@ Tetris::Tetris(QWidget *parent) :
     nextBox.setShape();
     rank=1;
     scores=0;
-
 
     boxColor=state_1;
     dropSpeed=dropSpeed_1;
@@ -53,7 +50,6 @@ void Tetris::newGame(){
         time_1->stop();
         gamePause=true;
         gameStartOrPause->setIcon(QIcon(":/stop.ico"));
-
     }else{
         time_1->start(dropSpeed);
         gamePause=false;
@@ -92,6 +88,9 @@ void Tetris::_about(){
 
 }
 
+/**
+ * 设置窗口部件
+ * */
 void Tetris::item(){
     scoreShow=new  QLCDNumber(8,this);
     scoreShow->setSegmentStyle(QLCDNumber::Filled);
@@ -116,12 +115,13 @@ void Tetris::item(){
     connect(about,SIGNAL(clicked()),this,SLOT(_about()));
 }
 
+/**
+ * 绘制信息
+ * */
 void Tetris::paintEvent(QPaintEvent *){
     QPainter  paint(this);
-
     //绘制游戏一些信息
     gameMessage(&paint);
-
     if(gameOver){
         time_1->stop();
         paint.setPen(QPen(Qt::black));
@@ -139,18 +139,14 @@ void Tetris::paintEvent(QPaintEvent *){
                 paint.drawLine(j*boxSize+boxSize-1,i*boxSize,j*boxSize+boxSize,i*boxSize+boxSize);
             }
         }
-
     //当前方块
     boxPaint(&paint);
     //绘制下一个方块
     nextBoxPaint(&paint);
-
 }
 
 void Tetris::boxPaint(QPainter *painter){
-
     for(int i=0;i<4;i++){
-
         painter->fillRect(currX+box.getX(i)*boxSize,currY+box.getY(i)*boxSize,boxSize,boxSize,box.getColor());
         painter->drawLine(currX+box.getX(i)*boxSize+boxSize-1,currY+box.getY(i)*boxSize-1,
                           currX+box.getX(i)*boxSize+boxSize-1,currY+box.getY(i)*boxSize+boxSize-1);
@@ -159,6 +155,9 @@ void Tetris::boxPaint(QPainter *painter){
     }
 }
 
+/**
+ * 绘制信息
+ * */
 void Tetris::gameMessage(QPainter *paint){
     paint->setPen(QPen(Qt::black));
     paint->drawLine(width,0,width,height);
@@ -174,11 +173,12 @@ void Tetris::gameMessage(QPainter *paint){
     }else{
         paint->drawText(240,130,5*boxSize,boxSize,Qt::AlignCenter,QString("Death"));
     }
-
     paint->drawText(240,178,4*boxSize,boxSize,Qt::AlignBottom,QString("NEXT"));
-
 }
 
+/**
+ * 下一个格子的绘制信息
+ * */
 void Tetris::nextBoxPaint(QPainter *paint){
     for(int i=0;i<4;i++){
         paint->fillRect(nextBoxX+nextBox.getX(i)*boxSize,nextBoxY+nextBox.getY(i)*boxSize,boxSize,
@@ -206,21 +206,17 @@ void Tetris::cleanAllFullLine(){
             }
             boxMaxHeight--;
         }
-
     }
-
     scoreShow->display(scores);
 }
 
 void Tetris::checkFullLine(){
-
     //获取方块下落后,方块的最高层
     for(int i=0;i<16;i++){
         if(fullLine(i)!=0){
             boxMaxHeight=i;
             break;}
     }
-
     //将所有的满行的方块标记为2
     for(int i=boxMaxHeight;i<16;i++){
         if(fullLine(i)==10){
@@ -229,24 +225,22 @@ void Tetris::checkFullLine(){
     }
 }
 
+/**
+ * 方块的下落就是每一个方块的坐标y进行变化
+ * */
 void Tetris::dropBox(){
-
     int newY=currY+boxSize;
     for(int i=0;i<4;i++){
-
         if(checkIsBOx(newY/boxSize+box.getY(i),currX/boxSize+box.getX(i)) &&
                 newY+boxSize*box.getY(i)>=0 || newY+box.getMaxY()*boxSize>=height){
-
            for(int y=0;y<4;y++){
                boxArea[currY/boxSize+box.getY(y)][currX/boxSize+box.getX(y)]=1;
             }
-
            if(newY+box.getMinY()*boxSize<0){
                gameOver=true;
                update();
                return;
            }
-
            box=nextBox;
            nextBox.setShape();
            currX=5*boxSize;
@@ -257,7 +251,6 @@ void Tetris::dropBox(){
            return;
        }
     }
-
     currY=newY;
     update();
 }
@@ -282,21 +275,17 @@ void Tetris::changeRankAndSpeed(int i){
             time_1->start(dropSpeed);
         }
     }
-
 }
-
 
 
 void Tetris::keyPressEvent(QKeyEvent *e){
     switch(e->key()){
-
     case Qt::Key_Space:
     {
         if(gameOver || gamePause){
             return;
         }
         rotate();
-
         break;
     }
     case Qt::Key_Left:
@@ -323,14 +312,12 @@ void Tetris::keyPressEvent(QKeyEvent *e){
         move(0,boxSize);
         break;
     }
+}}
 
-}
-
-
-}
-
+/**
+ * 方块旋转
+ * */
 void Tetris::rotate(){
-
     //绕(0,0)旋转90度,坐标变成(-y,x)
     if(box.getShape()==4){
         return;
@@ -343,9 +330,7 @@ void Tetris::rotate(){
                 boxArea[currY/boxSize+y][currX/boxSize+x]==1){
             return;
         }
-
     }
-
     for(int i=0;i<4;i++){
         int x=-(box.getY(i));
         int y=box.getX(i);
@@ -354,12 +339,13 @@ void Tetris::rotate(){
 
     }
     update();
-
 }
 
+/**
+ * 移动修改方块的x坐标
+ * */
 void Tetris::move(int x,int y){
-    for(int i=0;i<4;i++)
-    {
+    for(int i=0;i<4;i++){
         newX=currX+x;
         newY=currY+y;
         if(newX+box.getX(i)*boxSize>=width ||newX+box.getX(i)*boxSize<0

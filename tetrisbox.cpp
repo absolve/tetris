@@ -26,7 +26,6 @@ void tetrisbox::setShape(){
                          { {-1,1},{-1,0},{0,0},{1,0}},   //  L方块
                          { {1,1} ,{-1,0},{0,0},{1,0} }   //  L方块
                        };
-
     shape=qrand()%7;
     currentColor=colorTable[qrand()%7];
     for(int i=0;i<4;i++)
@@ -45,11 +44,9 @@ void tetrisbox::setShape(){
         }
      }
     }
-
 }
 
 int  tetrisbox::getMinY(){
-
     int y=currentbox[0][1];
     for(int i=1;i<4;i++){
         y=qMin(y,currentbox[i][1]);
@@ -63,11 +60,8 @@ int  tetrisbox::getMaxY(){
         y=qMax(y,currentbox[i][1]);
     }
     return y;
-
 }
 
-tetrisbox::~tetrisbox(){
-
-}
+tetrisbox::~tetrisbox(){}
 
 

@@ -12,6 +12,10 @@ class Tetris;
 class QLCDNumber;
 class QPushButton;
 
+/**
+ * 这个类就是主界面，主要用来显示界面和绘制信息
+ * 使用qt的库来实现
+ * */
 class Tetris : public QWidget
 {
     Q_OBJECT
@@ -64,7 +68,7 @@ private:
     int   currX;
     int   currY;    
     int   boxMaxHeight;     //方块所在的最大高度    
-    enum  {dropSpeed_1=1800,dropSpeed_2=1500,dropSpeed_3=1000};
+    enum  {dropSpeed_1=1500,dropSpeed_2=1000,dropSpeed_3=800};
     bool  gameOver;         //游戏结束
     bool  gamePause;        //游戏暂停
     enum  {height=320,width=200}; //游戏区域
